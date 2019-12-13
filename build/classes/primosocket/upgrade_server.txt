@@ -1,0 +1,72 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------
+								FASE 1
+
+public class ServerConnessione {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args){
+        ServerSocket sSocket;
+        int porta=3500;
+        
+        while(true){
+            try {
+                sSocket = new ServerSocket(porta);
+                Socket connessione;
+                System.out.println("In attesa di connessione...");
+            
+                connessione=sSocket.accept();
+                System.out.println("Connessione Avvenuta");
+            
+                sSocket.close();
+                System.out.println("Sessione termianta");
+                
+            } catch (IOException ex) {
+                System.out.println("Errore");
+            }
+        }
+    }
+//tutto viene eseguito nel try, non è implementato il blocco finally nella quale andrebbe inserita la fase di chiusura
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+								FASE 2
+//aggiunta della parte finally nel server
+
+public class ServerConnessione {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args){
+        ServerSocket sSocket = null;
+        int porta=3500;
+        
+        while(true){
+            try {
+                sSocket = new ServerSocket(porta);
+                Socket connessione;
+                System.out.println("In attesa di connessione...");
+            
+                connessione=sSocket.accept();   //-----connessione effettuata------
+                System.out.println("Connessione Avvenuta");
+            
+                
+            } catch (IOException ex) {
+                System.out.println("Errore");
+            } finally {//---------------------Chiusura della connessione----------------------
+                try {
+                    sSocket.close();
+                    System.out.println("Sessione terminata correttamente");//messaggio di avvenuta chiusura
+                } catch (IOException ex) {
+                    System.out.println("Problema nella chiusura");
+                }
+            }//-------------------------------------------------------------------------------
+        }
+    }
+    
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------
+								FASE 3
+//implementazione del timer di chiusura
+
